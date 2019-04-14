@@ -23,3 +23,9 @@ tbody th{
       background-color: #fff;
       cursor: pointer;
 }
+.block__line-update:before{
+    background-image : url(../images/update.png);
+}
+.block__line-update{
+    margin-right: 1%;
+}

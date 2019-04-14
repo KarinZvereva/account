@@ -3,6 +3,9 @@ block scripts
     style
         include ../public/stylesheets/groups.css
         include ../public/stylesheets/form_add_update.css
+    script
+        include ../public/scripts/groups.js
+        include ../public/scripts/jquery-3.2.1.min.js
 block content
     div(class="nav")
         div(class="nav__left")
@@ -19,6 +22,7 @@ block content
 
     div(class="block__line")
             button(class="btn btn-light btn-image block__line-add") Добавить
+            button(class="btn btn-light btn-image block__line-update") Изменить
             button(class="btn btn-light btn-image block__line-del") Удалить
 
     table(class="table")
@@ -28,13 +32,13 @@ block content
                     th Год
                     th Группа
                     th Направление
-            tbody
+            tbody(class="table_body")
                 -for(var i=0;i<resultQuery.length;i++){
                     tr(class="info")
-                        th(id="id")=resultQuery[i].id
-                        th(id="cod")=resultQuery[i].year
-                        th(id="name")=resultQuery[i].name
-                        th(id="dir")=resultQuery[i].direction
+                        th(id="info-id")=resultQuery[i].id
+                        th(id="info-year")=resultQuery[i].year
+                        th(id="info-name")=resultQuery[i].name
+                        th(id="info-dir")=resultQuery[i].direction
                 -}
 
     div(class="block__input")
@@ -42,28 +46,28 @@ block content
             p Группа
             div(class="form-group")
                 label Год:
-                input(type="text" class="form-control " id="code" placeholder="Введите год" )
+                input(type="text" class="form-control " id="field-code" placeholder="Введите год" )
             div(class="form-group")
                 label Название:
-                input(type="text" class="form-control" id="iname" placeholder="Введите название" )
+                input(type="text" class="form-control" id="field-name" placeholder="Введите название" )
             div(class="form-group")
                 label(for="sel1") Направление:
                 select(class="form-control" id="sel1")          
             div(class="block__add__form__button")    
                 button(class="btn btn-primary" class="button-add") Добавить
-                button(class="btn btn-primary" class="button-cancel") Отмена
+                button(class="btn btn-primary" class="button__cancel-add") Отмена
 
       div(class="block__update")
             p Группа
             div(class="form-group")
                 label Год:
-                input(type="text" class="form-control" id="oldCode" placeholder="Введите год" )
+                input(type="text" class="form-control" id="field__currernt-code" placeholder="Введите год" )
             div(class="form-group")
                 label Название:
-                input(type="text" class="form-control" id="oldName" placeholder="Введите название" )
+                input(type="text" class="form-control" id="field__currernt-name" placeholder="Введите название" )
             div(class="form-group" )
                 label(for="sel1") Направление:
-                select(class="form-control" id="oldDir")       
+                select(class="form-control" id="field__currernt-direction")       
             div(class="block__add__form__button")    
                 button(class="btn btn-primary" class="button__save") Сохранить
-                button(class="btn btn-primary" class="button-cancel") Отмена
+                button(class="btn btn-primary" class="button__cancel-save") Отмена

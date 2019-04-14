@@ -24,6 +24,7 @@ block content
     
     div(class="block__line")
             button(class="btn btn-light btn-image block__line-add") Добавить
+            button(class="btn btn-light btn-image block__line-update") Изменить
             button(class="btn btn-light btn-image block__line-del") Удалить
 
     table(class="table")
@@ -58,10 +59,10 @@ block content
             p Направление
             div(class="form-group")
                 label Код:
-                input(type="text" class="form-control" id="oldCode" placeholder="Введите код" )
+                input(type="text" class="form-control" id="field__currernt-code" placeholder="Введите код" )
             div(class="form-group")
                 label Наименование направления:
-                input(type="text" class="form-control" id="oldName" placeholder="Введите наименование" )
+                input(type="text" class="form-control" id="field__currernt-name" placeholder="Введите наименование" )
             div(class="block__add__form__button")    
                 button(class="btn btn-primary" class="button__save") Сохранить
-                button(class="btn btn-primary" class="button__cancel-del") Отмена
+                button(class="btn btn-primary" class="button__cancel-save") Отмена

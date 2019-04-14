@@ -136,9 +136,16 @@ module.exports = function(app,passport){
                 });
             });        
         })
-        app.post('/deleteDirection',(req,res)=>{   
-            var id = req.body.id;
-            connection.query("DELETE FROM `directions` where id="+id,(err,rows,fields)=>{
+        app.post('/deleteDirection',(req,res)=>
+        {   
+            var query = '';
+            for(let i = 0; i<req.body.length; i++){
+                if(i != req.body.length-1)
+                    query += req.body[i].id+', ';
+                else
+                    query += req.body[i].id;
+            }
+            connection.query("DELETE FROM `directions` where id IN ("+query+")",(err,rows,fields)=>{
                 if(err){
                     return err;
                 }
@@ -146,7 +153,7 @@ module.exports = function(app,passport){
                     res.send(rows);
                     res.end();
                 });
-            });        
+            });     
         })
         app.get('/getAllDir',(req,res)=>{   
             connection.query("SELECT `direction`,`id` FROM `directions`",(err,rows,fields)=>{
@@ -174,8 +181,10 @@ module.exports = function(app,passport){
                 if(err){
                     return err;
                 }
-                res.send(true);
-                res.end();
+                connection.query("SELECT groups.id,groups.year,groups.name,directions.direction FROM groups,directions WHERE groups.dir_id=directions.id",(err,rows,fields)=>{
+                    res.send(rows);
+                    res.end();
+                });
             });        
         })
         app.post('/changeGroup',(req,res)=>{ 
@@ -183,27 +192,35 @@ module.exports = function(app,passport){
             var id = req.body.id;
             var year = req.body.year;
             var name = req.body.name;  
-            var idDir = req.body.idDir;
-            console.log(year)
-            console.log(name)
+            var idDir = req.body.dir;
+            console.log(id + "  " +idDir);
             connection.query("UPDATE groups SET `dir_id`="+idDir+",`year`="+year+",`name`='"+name+"' WHERE `id`="+id,(err,rows,fields)=>{
                 if(err){
                     return err;
                 }
-                res.send(true);
-                res.end();
+                connection.query("SELECT groups.id,groups.year,groups.name,directions.direction FROM groups,directions WHERE groups.dir_id=directions.id",(err,rows,fields)=>{
+                    res.send(rows);
+                    res.end();
+                });
             });        
         })
         app.post('/deleteGroup',(req,res)=>{ 
-            var id = req.body.id;
-            var year = req.body.year;
-            var name = req.body.name;  
-            connection.query("DELETE FROM `groups` WHERE `id`="+id,(err,rows,fields)=>{
+            var query = '';
+            console.log(req.body)
+            for(let i = 0; i<req.body.length; i++){
+                if(i != req.body.length-1)
+                    query += req.body[i].id+', ';
+                else
+                    query += req.body[i].id;
+            }
+            connection.query("DELETE FROM `groups` WHERE id IN ("+query+")",(err,rows,fields)=>{
                 if(err){
                     return err;
                 }
-                res.send(true);
-                res.end();
+                connection.query("SELECT groups.id,groups.year,groups.name,directions.direction FROM groups,directions WHERE groups.dir_id=directions.id",(err,rows,fields)=>{
+                    res.send(rows);
+                    res.end();
+                });
             });      
         })
         ///////////////////////////////////////////////////
